@@ -1,3 +1,5 @@
+NRM_TARGET := mm_cozies_chaos_template.nrm
+
 BUILD_DIR := build
 
 MOD_TOML := mod.toml
@@ -9,12 +11,18 @@ BASH_LIKE := 0
 ifeq ($(OS),Windows_NT)
     CC      := clang
     LD      := ld.lld
+	NRM_COPY_DEST := ~/AppData/Local/Zelda64Recompiled/mods/
+	RECOMP_MOD_TOOL := RecompModTool.exe
 else ifneq ($(shell uname),Darwin)
     CC      := clang
     LD      := ld.lld
+	NRM_COPY_DEST := ~/.config/Zelda64Recompiled/mods/
+	RECOMP_MOD_TOOL := RecompModTool
 else
     CC      ?= clang
     LD      ?= ld.lld
+	NRM_COPY_DEST := ~/.config/Zelda64Recompiled/mods/
+	RECOMP_MOD_TOOL := RecompModTool
 endif
 
 ifdef MINGW_PREFIX
@@ -26,9 +34,6 @@ ifneq ($(OS),Windows_NT)
 endif
 
 TARGET  := $(BUILD_DIR)/mod.elf
-NRM_TARGET := mm_cozies_chaos_template.nrm
-
-NRM_COPY_DEST=~/AppData/Local/Zelda64Recompiled/mods/
 
 LDSCRIPT := mod.ld
 CFLAGS   := -target mips -mips2 -mabi=32 -O2 -G0 -mno-abicalls -mno-odd-spreg -mno-check-zero-division \
@@ -49,7 +54,7 @@ $(TARGET): $(C_OBJS) $(LDSCRIPT) | $(BUILD_DIR)
 	$(LD) $(C_OBJS) $(LDFLAGS) -o $@
 
 $(NRM_TARGET): $(TARGET) $(MOD_TOML)
-	RecompModTool.exe $(MOD_TOML) .
+	$(RECOMP_MOD_TOOL) $(MOD_TOML) .
 
 $(BUILD_DIR) $(BUILD_DIR)/src:
 ifeq ($(BASH_LIKE),1)
