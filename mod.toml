@@ -5,24 +5,24 @@
 
 # Unique ID of this mod. Pick something long enough that it'll never be the same as any other mod.
 # The name displayed in the mod management menu is separate from this so this doesn't need to be human readable.
-id = "mm_cozies_chaos_pack"
+id = "mm_cozies_chaos_template"
 
 # Version of this mod.
 version = "1.0.0"
 
 # The name that will show up for this mod in the mod menu. This should be human readable.
-display_name = "Cozies' Chaos Pack"
+display_name = "Chaos Template"
 
 # The description that will show up when this mod is displayed in the mod menu. This should be human readable.
 description =  """
-I forgor to update this lol"""
+You forgor to update this lol"""
 
 # A short description that will show up in this mod's entry in the mod list. This should be human readable and kept short
 # to prevent it from being cut off due to the limited space.
-short_description = "All of cozies' chaos effects."
+short_description = "All of your template chaos effects."
 
 # Authors of this mod.
-authors = [ "thecozies" ]
+authors = [ "somebody" ]
 
 # ID of the target recomp game.
 game_id = "mm"
@@ -33,8 +33,7 @@ minimum_recomp_version = "1.2.0"
 # Dependency mods. Each entry is the mod's ID and then an optional minimum version of the dependency mod.
 dependencies = [
 # Example dependency:
-   "mm_recomp_chaos_framework",
-   "mm_recomp_auto_object_slots"
+   "mm_recomp_chaos_framework"
 ]
 
 # Native libraries (e.g. DLLs) and the functions they export.
@@ -50,7 +49,7 @@ native_libraries = [
 elf_path = "build/mod.elf"
 
 # Output mod filename.
-mod_filename = "mm_cozies_chaos_pack"
+mod_filename = "mm_cozies_chaos_template"
 
 # Reference symbol files.
 func_reference_syms_file = "Zelda64RecompSyms/mm.us.rev1.syms.toml"

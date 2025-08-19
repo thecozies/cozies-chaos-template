@@ -26,9 +26,9 @@ ifneq ($(OS),Windows_NT)
 endif
 
 TARGET  := $(BUILD_DIR)/mod.elf
-NRM_TARGET := mm_cozies_chaos_pack.nrm
+NRM_TARGET := mm_cozies_chaos_template.nrm
 
-NRM_COPY_DEST=~/AppData/Local/Zelda64Recompiled/mods/${NRM_TARGET}
+NRM_COPY_DEST=~/AppData/Local/Zelda64Recompiled/mods/
 
 LDSCRIPT := mod.ld
 CFLAGS   := -target mips -mips2 -mabi=32 -O2 -G0 -mno-abicalls -mno-odd-spreg -mno-check-zero-division \

@@ -5,13 +5,10 @@
 #include "rt64_extended_gbi.h"
 #include "cozy_effect_externs.h"
 
-#define ENABLE_BOMB_SPAM
-#define ENABLE_SUDDEN_REDEAD
-#define ENABLE_ROLLING_LINK
-#define ENABLE_BIG_HEAD
-#define ENABLE_NA_AIM
-#define ENABLE_TOP_DOWN_ZELDA
+// Add defines for your effects here to easily enable/disable them
+#define ENABLE_EXAMPLE_EFFECT
 
+// Wrapper around ChaosEffect that adds some convenience
 typedef struct CozyChaosEffect {
     ChaosEffect effect;
     ChaosDisturbance disturbance;
@@ -20,18 +17,19 @@ typedef struct CozyChaosEffect {
     bool fake;
 } CozyChaosEffect;
 
+// Creates an activate function for the effect, sets the effect "active"
 #define COMMON_ACTIVATE_FUNC(effect_code_name, effect, effect_name) \
     void on_##effect_code_name##_activate(struct PlayState *play) { \
         recomp_printf(#effect_name " Activated\n"); \
         effect.active = true; \
     }
-
+// Creates an end function for the effect, sets the effect "inactive"
 #define COMMON_END_FUNC(effect_code_name, effect, effect_name) \
     void on_##effect_code_name##_end(struct PlayState *play) { \
         recomp_printf(#effect_name " Deactivated\n"); \
         effect.active = false; \
     }
-
+// Creates both an activation and deactivation function for the effect
 #define COMMON_FUNCS(effect_code_name, effect, effect_name) \
     COMMON_ACTIVATE_FUNC(effect_code_name, effect, effect_name) \
     COMMON_END_FUNC(effect_code_name, effect, effect_name)
@@ -52,9 +50,5 @@ extern PlayerUpdateCache player_update_cache;
         { player_update_callback(this, play); }; \
     }
 
-extern CozyChaosEffect cozy_bomb_spam;
-extern CozyChaosEffect cozy_sudden_redead;
-extern CozyChaosEffect cozy_rolling_link;
-extern CozyChaosEffect cozy_big_head;
-extern CozyChaosEffect cozy_na_aim;
-extern CozyChaosEffect cozy_top_down_zelda;
+// Extern all of your effects here
+extern CozyChaosEffect example_effect;

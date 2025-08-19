@@ -1,16 +1,15 @@
 {
     "authors" : [
-        "thecozies"
+        "somebody"
     ],
     "dependencies" : [
-        "mm_recomp_chaos_framework",
-        "mm_recomp_auto_object_slots"
+        "mm_recomp_chaos_framework"
     ],
-    "description" : "I forgor to update this lol",
-    "display_name" : "Cozies' Chaos Pack",
+    "description" : "You forgor to update this lol",
+    "display_name" : "Chaos Template",
     "game_id" : "mm",
-    "id" : "mm_cozies_chaos_pack",
+    "id" : "mm_cozies_chaos_template",
     "minimum_recomp_version" : "1.2.0",
-    "short_description" : "All of cozies' chaos effects.",
+    "short_description" : "All of your template chaos effects.",
     "version" : "1.0.0"
 }
