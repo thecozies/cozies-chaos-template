@@ -6,6 +6,10 @@ MOD_TOML := mod.toml
 
 BASH_LIKE := 0
 
+ifdef MINGW_PREFIX
+	BASH_LIKE := 1
+endif
+
 # Allow the user to specify the compiler and linker on macOS
 # as Apple Clang does not support MIPS architecture
 ifeq ($(OS),Windows_NT)
@@ -18,20 +22,21 @@ else ifneq ($(shell uname),Darwin)
     LD      := ld.lld
 	NRM_COPY_DEST := ~/.config/Zelda64Recompiled/mods/
 	RECOMP_MOD_TOOL := RecompModTool
+	BASH_LIKE := 1
 else
     CC      ?= clang
     LD      ?= ld.lld
 	NRM_COPY_DEST := ~/.config/Zelda64Recompiled/mods/
 	RECOMP_MOD_TOOL := RecompModTool
-endif
-
-ifdef MINGW_PREFIX
 	BASH_LIKE := 1
 endif
 
-ifneq ($(OS),Windows_NT)
-	BASH_LIKE := 1
+ifeq ($(BASH_LIKE),1)
+	COPY_CMD := cp
+else
+	COPY_CMD := copy /Y
 endif
+
 
 TARGET  := $(BUILD_DIR)/mod.elf
 
@@ -67,7 +72,7 @@ $(C_OBJS): $(BUILD_DIR)/%.o : %.c | $(BUILD_DIR) $(BUILD_DIR)/src
 	$(CC) $(CFLAGS) $(CPPFLAGS) $< -MMD -MF $(@:.o=.d) -c -o $@
 
 copy: $(NRM_TARGET)
-	cp $(NRM_TARGET) $(NRM_COPY_DEST)
+	$(COPY_CMD) $(NRM_TARGET) $(NRM_COPY_DEST)
 
 clean:
 ifeq ($(BASH_LIKE),1)
