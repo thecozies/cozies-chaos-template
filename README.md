@@ -1,19 +1,28 @@
 # template chaos pack
 
+This is a template repo for creating a chaos pack.
+It comes with various helpers to make adding and tracking chaos effects more easily.
+
+All types/helpers are listed in `include/cozy_chaos.h`
+
+All effects should be added to `src/effects/<your_effect>.c`, and those MUST be included in `src/effect_includes.c`
+
 ## Getting started
 
 - init submodules
-- change `id` and `mod_filename` in `mod.toml`, change `NRM_TARGET` to match 
-- Adding effects
-  - Add your effect c file to `src/effects`
-    - add `#include "cozy_chaos.h"`
-    - Use macro `REGISTER_CHAOS_EFFECT(<your effect>)` at the top below the header
-    - create a `CozyChaosEffect <your effect>` and set the effect params plus disturbance level
-    - add your effects hooks and whatnot to this file
-  - in `src/effect_includes.c`
-    - include your effect, e.g. `#include "effects/example_effect.c"`
+- change `id` and `mod_filename` in `mod.toml`, change `NRM_TARGET` to match the toml's `mod_filename`
 
-## building notes
+## Adding effects
+
+- Add your effect c file to `src/effects`
+  - add `#include "cozy_chaos.h"`
+  - Use macro `REGISTER_CHAOS_EFFECT(<your effect>)` at the top below the header
+  - create a `CozyChaosEffect <your effect>` and set the effect params plus disturbance level
+  - add your effects hooks and whatnot to this file
+- in `src/effect_includes.c`
+  - include your effect, e.g. `#include "effects/example_effect.c"`
+
+## Building notes
 
 mostly like the main template except that
 

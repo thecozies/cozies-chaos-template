@@ -1,26 +1,31 @@
 #include "cozy_chaos.h"
 
+// Registers the chaos effect.
+// Parameter should be the CozyChaosEffect variable you create later in this file
 REGISTER_CHAOS_EFFECT(example_effect);
 
-// Creates the two functions you typically need. Handles setting an "active" state.
-COMMON_FUNCS(example_effect, example_effect, "Example Effect")
-
-static s32 effect_timer = 0;
+// Creates the two functions you typically need. Handles setting an `active` state.
+// You don't need to use this, the purpose is to set `<CozyChaosEffect>.active` to `true` when your effect activates,
+// and to `false` when it deactivates.
+COMMON_FUNCS(example_effect)
 
 // The COMMON_FUNCS macro makes these functions for you, you can create this manually.
 // The macro automatically handles setting your effect to active/inactive
 /*
-void on_example_effect_activate(struct PlayState *play) {
-    recomp_printf("\"Example Effect\"" " Activated\n");
-    example_effect.active = 1;
-}
-void on_example_effect_end(struct PlayState *play) {
-    recomp_printf("\"Example Effect\"" " Deactivated\n");
-    example_effect.active = 0;
-}
+    void on_example_effect_activate(struct PlayState *play) {
+        recomp_printf("\"Example Effect\"" " Activated\n");
+        example_effect.active = 1;
+    }
+    void on_example_effect_end(struct PlayState *play) {
+        recomp_printf("\"Example Effect\"" " Deactivated\n");
+        example_effect.active = 0;
+    }
 */
 
-// Happens every frame that your effect is active
+// Just for this specific example, I added a timer for tracking how long the effect has been going in `on_effect_update`
+static s32 effect_timer = 0;
+
+// Happens every frame that this effect is active
 void on_effect_update(struct PlayState *play) {
     recomp_printf("Time: %d\n", effect_timer++);
 }
@@ -34,11 +39,10 @@ CozyChaosEffect example_effect = {
         .on_end_fun = on_example_effect_end,
     },
     .disturbance = CHAOS_DISTURBANCE_VERY_LOW,
-    .active = false,
-    .entity = NULL,
 };
 
-// The actual effect here. Is called using the PLAYER_UPDATE_RETURN_HOOK macro with this/play args
+// Example of the actual effect here. Is called using the PLAYER_UPDATE_RETURN_HOOK macro with this/play args.
+// Your effect can be a hook or patch or whatever, and you're able to check for effect.active
 void after_player_update_example_effect(Player* this, PlayState* play) {
     // Make sure the effect is running
     if (!example_effect.active) {
@@ -56,4 +60,5 @@ void after_player_update_example_effect(Player* this, PlayState* play) {
 }
 
 // Adds hook for this to be invoked after Player_Update
+// This is just something for convenience and completely optional, this way you don't need to cache the args to Player_Update
 PLAYER_UPDATE_RETURN_HOOK(example_effect, after_player_update_example_effect);
