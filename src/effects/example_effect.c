@@ -1,5 +1,7 @@
 #include "cozy_chaos.h"
 
+REGISTER_CHAOS_EFFECT(example_effect);
+
 // Creates the two functions you typically need. Handles setting an "active" state.
 COMMON_FUNCS(example_effect, example_effect, "Example Effect")
 

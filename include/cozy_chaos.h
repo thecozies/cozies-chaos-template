@@ -5,9 +5,6 @@
 #include "rt64_extended_gbi.h"
 #include "cozy_effect_externs.h"
 
-// Add defines for your effects here to easily enable/disable them
-#define ENABLE_EXAMPLE_EFFECT
-
 // Wrapper around ChaosEffect that adds some convenience
 typedef struct CozyChaosEffect {
     ChaosEffect effect;
@@ -50,5 +47,11 @@ extern PlayerUpdateCache player_update_cache;
         { player_update_callback(this, play); }; \
     }
 
-// Extern all of your effects here
-extern CozyChaosEffect example_effect;
+void register_chaos_effect(CozyChaosEffect *cozy_effect);
+
+// Registers your effect. Put at the top of your effect's file. You must include the effect file in src/effect_includes.c
+#define REGISTER_CHAOS_EFFECT(cozy_effect) \
+extern CozyChaosEffect cozy_effect; \
+RECOMP_CALLBACK("mm_recomp_chaos_framework", chaos_on_init) void register_chaos_effect_##cozy_effect(void) { \
+    register_chaos_effect(&cozy_effect); \
+}
